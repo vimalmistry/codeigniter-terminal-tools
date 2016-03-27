@@ -17,20 +17,20 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Displays the help menu
+     * Display the help menu
      * @print shows available actions
      */
     public function help() {
         $info = "Available commands through \"php index.php\":\n";
-        $info .= "tools migration \"file_name\" | Creates new migration file\n";
-        $info .= "tools migrate \"version_number\" | Runs all migrations. The version number is optional.\n";
-        $info .= "tools reset | Resets all migrations.\n";
+        $info .= "tools migration \"file_name\" | Create new migration file\n";
+        $info .= "tools migrate \"version_number\" | Run all migrations. The version number is optional.\n";
+        $info .= "tools reset | Reset all migrations.\n";
 
         print $info . PHP_EOL;
     }
 
     /**
-     * Runs all pending migration files.
+     * Run all pending migration files.
      * The migration file number is optional. It's useful for rolling back migrations.
      * @params $number int
      */
@@ -55,7 +55,7 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Creates a migration file.
+     * Create a migration file.
      * @params $name string
      */    
     public function migration($name)
@@ -72,7 +72,7 @@ class Tools extends CI_Controller
         }
     }
     /**
-     * Resets all migrations from database.
+     * Reset all migrations from database.
      */    
     public function reset()
     {
