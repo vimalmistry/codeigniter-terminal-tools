@@ -6,22 +6,23 @@ class Tools extends CI_Controller
     {
         parent::__construct();
 
-        // can be called only from the terminal
+        // Can be called only from the terminal
         if (!$this->input->is_cli_request()) {
-            exit('Direct access is not allowed. This is a console tool, use the terminal');
+            exit('Direct access denied! Use terminal.');
         }
 
         $this->load->dbforge(); 
-        $this->load->library('migration');       
+        $this->load->library('migration');
+        $this->load->helper('file');       
     }
 
     public function help() {
-        $info = "Available commands through \"php index.php\":\n\n";
+        $info = "Available commands through \"php index.php\":\n";
         $info .= "tools migration \"file_name\" | Create new migration file\n";
         $info .= "tools migrate \"version_number\" | Run all migrations. The version number is optional.\n";
         $info .= "tools reset | Reset all migrations.\n";
 
-        echo $info . PHP_EOL;
+        print $info . PHP_EOL;
     }
 
     public function migrate($version = null)
@@ -46,18 +47,12 @@ class Tools extends CI_Controller
 
     public function migration($name)
     {
-        $name = strtolower($name);
-        $path = APPPATH . 'migrations/'. date('YmdHis') . '_' . $name .'.php';
-        $new_migration = fopen($path, "w");
+        $data['name'] = strtolower($name);
+        $migration_file = APPPATH . 'migrations/'. date('YmdHis') . '_' . $name .'.php';
+        $migration_template = $this->load->view('tools/migrations', $data, TRUE);
 
-        if ($new_migration) {
-            $data['name'] = $name;
-            $migration_template = $this->load->view('tool/migrations', $data, TRUE);
-
-            fwrite($new_migration, $migration_template);
-            fclose($new_migration);
-
-            echo 'Success: migration has been created.';
+        if (write_file($migration_file, $migration_template, "w")) {
+            echo 'Success: migration file has been created.';
         }
         else {
             echo 'Error: unable to create migration file!';
@@ -68,5 +63,5 @@ class Tools extends CI_Controller
     {
         $this->migration->version(0);
         echo 'Success: migrations reset.';            
-    }
+    }  
 }
