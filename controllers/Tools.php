@@ -16,6 +16,10 @@ class Tools extends CI_Controller
         $this->load->helper('file');       
     }
 
+    /**
+     * Displays the help menu
+     * @print shows available actions
+     */
     public function help() {
         $info = "Available commands through \"php index.php\":\n";
         $info .= "tools migration \"file_name\" | Create new migration file\n";
@@ -25,11 +29,16 @@ class Tools extends CI_Controller
         print $info . PHP_EOL;
     }
 
-    public function migrate($version = null)
+    /**
+     * Runs all pending migration files.
+     * The migration file number is optional. It's useful for rolling back migrations.
+     * @params $number int
+     */
+    public function migrate($number = null)
     {
-        if ($version) {
-            if ($this->migration->version($version)) {
-                echo 'Success: migration run.';
+        if ($number) {
+            if ($this->migration->version($number)) {
+                echo 'Success: migration launched.';
             }
             else {
                 show_error($this->migration->error_string());                
@@ -37,7 +46,7 @@ class Tools extends CI_Controller
         }
         else {
             if ($this->migration->latest()) {
-                echo 'Success: migrations run.';
+                echo 'Success: migrations launched.';
             }
             else {
                 show_error($this->migration->error_string());
@@ -45,6 +54,10 @@ class Tools extends CI_Controller
         }
     }
 
+    /**
+     * Creates a migration file.
+     * @params $name string
+     */    
     public function migration($name)
     {
         $data['name'] = strtolower($name);
@@ -58,10 +71,12 @@ class Tools extends CI_Controller
             echo 'Error: unable to create migration file!';
         }
     }
-
+    /**
+     * Resets all migrations from database.
+     */    
     public function reset()
     {
         $this->migration->version(0);
-        echo 'Success: migrations reset.';            
+        echo 'Success: migrations reseted.';            
     }  
 }
