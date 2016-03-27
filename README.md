@@ -1,7 +1,7 @@
 # CI-Tools-Controller
 Maintenance controller for Codeigniter3
 ## Migrations
-Available commands through "php index.php":
+Available commands:
 ```
 tools help | Displays the help menu
 tools migration "file_name" | Creates a migration file
