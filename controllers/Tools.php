@@ -22,9 +22,9 @@ class Tools extends CI_Controller
      */
     public function help() {
         $info = "Available commands through \"php index.php\":\n";
-        $info .= "tools migration \"file_name\" | Create new migration file\n";
-        $info .= "tools migrate \"version_number\" | Run all migrations. The version number is optional.\n";
-        $info .= "tools reset | Reset all migrations.\n";
+        $info .= "tools migration \"file_name\" | Creates new migration file\n";
+        $info .= "tools migrate \"version_number\" | Runs all migrations. The version number is optional.\n";
+        $info .= "tools reset | Resets all migrations.\n";
 
         print $info . PHP_EOL;
     }
