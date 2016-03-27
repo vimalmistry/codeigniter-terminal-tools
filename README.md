@@ -8,10 +8,8 @@ $config['migration_type'] = 'timestamp';
 ```
 Terminal commands:
 ```
-!use php index.php
-
-tools help                        Display the help menu
-tools migration "file_name"       Create a migration file
-tools migrate "version_number"    Run all migrations. The migration file number is optional.
-tools reset                       Delete all migrations from database
+php index.php tools help                        Display the help menu
+php index.php tools migration "file_name"       Create a migration file
+php index.php tools migrate "version_number"    Run all migrations. The migration file number is optional.
+php index.php tools reset                       Delete all migrations from database
 ```
