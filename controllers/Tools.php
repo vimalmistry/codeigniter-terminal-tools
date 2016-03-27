@@ -38,7 +38,7 @@ class Tools extends CI_Controller
     {
         if ($number) {
             if ($this->migration->version($number)) {
-                echo 'Success: migration launched.';
+                echo 'Success: migration has been launched.';
             }
             else {
                 show_error($this->migration->error_string());                
@@ -46,7 +46,7 @@ class Tools extends CI_Controller
         }
         else {
             if ($this->migration->latest()) {
-                echo 'Success: migrations launched.';
+                echo 'Success: migrations has been launched.';
             }
             else {
                 show_error($this->migration->error_string());
@@ -77,6 +77,6 @@ class Tools extends CI_Controller
     public function reset()
     {
         $this->migration->version(0);
-        echo 'Success: migrations reseted.';            
+        echo 'Success: migrations has been reseted.';            
     }  
 }
