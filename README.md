@@ -1,15 +1,13 @@
 # CI-Tools-Controller
 Maintenance controller for Codeigniter3
 
-Migration configs
------------------
+#### Migration configs
 Open /application/config/migration.php and set:
 ```
 $config['migration_enabled'] = TRUE;
 $config['migration_type'] = 'timestamp';
 ```
-Terminal commands
------------------
+#### Terminal commands
 ```
 !Don't forget to use "php index.php" before commands below.
 
