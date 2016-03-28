@@ -93,11 +93,11 @@ class Tools extends CI_Controller
 
     /**
      * Available actions for application files:
-     * => controller. Create controller.
-     * => model. Create model.
-     * => library. Create library.
+     * => controller
+     * => model
+     * => library
      *
-     * @params $name string. I'ts a file name.
+     * @params $name string. It's a file name.
      * @params $key string. Use "-rm" to remove your created file.
      */
     public function controller($name, $key = null)
