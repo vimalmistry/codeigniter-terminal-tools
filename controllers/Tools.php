@@ -1,13 +1,25 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Tools
+ * Work with migrations & create general app files.
+ */
 class Tools extends CI_Controller
 {
+    /**
+     * List of avalable file types
+     * @var array
+     */
     protected $file = array(
         'controller' => 'controllers',
         'model' =>'models',
-        'library' =>'libraries'
+        'library' =>'libraries',
+        'helper' =>'helpers'
     );
 
+    /**
+     * Class constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -22,19 +34,19 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Display the help menu
+     * Display help menu
      * @print shows available actions
      */
     public function help() {
-        $info = "CI migration commands:\n";
-        $info .= "php index.php tools migration \"name\"            Create new migration file\n";
-        $info .= "php index.php tools migrate \"version\"           Run all migrations. The version number is optional.\n";
-        $info .= "php index.php tools reset                       Reset all migrations.\n\n";
-        $info .= "CI file commands:\n";        
-        $info .= "php index.php tools controller \"name\"           Create new controller.\n";
-        $info .= "php index.php tools model \"name\"                Create new model.\n";
-        $info .= "php index.php tools library \"name\"              Create new library.\n";
-        $info .= "php index.php tools delete \"file\" \"name\"        Delete file.";
+        $info = "Migration commands:\n";
+        $info .= "tools migration \"name\"            Create new migration file\n";
+        $info .= "tools migrate \"version\"           Run all migrations. The version number is optional.\n";
+        $info .= "tools reset                       Reset all migrations.\n\n";
+        $info .= "File commands:\n";        
+        $info .= "tools controller \"name\"           Create new controller.\n";
+        $info .= "tools model \"name\"                Create new model.\n";
+        $info .= "tools library \"name\"              Create new library.\n";
+        $info .= "tools helper \"name\"               Create new helper.\n";        
 
         print $info . PHP_EOL;
     }
@@ -65,7 +77,7 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Create a migration file.
+     * Create a migration file
      * @params $name string
      */    
     public function migration($name)
@@ -83,7 +95,7 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Reset all migrations from database.
+     * Reset all migrations from database
      */    
     public function reset()
     {
@@ -92,41 +104,48 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Available actions for application files:
-     * => controller
-     * => model
-     * => library
-     *
-     * @params $name string. It's a file name.
-     * @params $key string. Use "-rm" to remove your created file.
+     * Create controller
+     * @params $name string
      */
-    public function controller($name, $key = null)
+    public function controller($name)
     {
-        ($key === '-rm') ?
-        $this->_delete($this->file['controller'], $name) :
-        $this->_create($this->file['controller'], $name);
-    }
-
-    public function model($name, $key = null)
-    {
-        ($key === '-rm') ?
-        $this->_delete($this->file['model'], $name) :
-        $this->_create($this->file['model'], $name);        
-    }
-
-    public function library($name, $key = null)
-    {
-        ($key === '-rm') ?
-        $this->_delete($this->file['library'], $name) :
-        $this->_create($this->file['library'], $name);         
+        $this->_create_file($this->file['controller'], $name);
     }
 
     /**
-     * Create application files.
+     * Create model
+     * @params $name string
+     */
+    public function model($name)
+    {
+        $this->_create_file($this->file['model'], $name);        
+    }
+
+    /**
+     * Create library
+     * @params $name string
+     */
+    public function library($name)
+    {
+        $this->_create_file($this->file['library'], $name);         
+    }
+
+    /**
+     * Create helper
+     * @params $name string
+     */
+    public function helper($name)
+    {
+        $name = strtolower($name) .'_helper';
+        $this->_create_file($this->file['helper'], $name);         
+    }
+
+    /**
+     * Create application files
      * @params $type string
      * @params $name string 
      */
-    protected function _create($type, $name)
+    protected function _create_file($type, $name)
     {
         $data['name'] = $name;
         $segment = $type . '/' . $name;
@@ -145,26 +164,5 @@ class Tools extends CI_Controller
         fclose($file);
 
         echo 'Success: "' . $segment . '.php"  has been created.' . PHP_EOL;
-    }
-
-    /**
-     * Delete application files.
-     * @params $type string
-     * @params $name string  
-     */
-    protected function _delete($type, $name)
-    {
-        $segment = $type . '/' . $name;
-        $file = APPPATH . $segment . '.php';
-
-        // Check similar file
-        if (file_exists($file)) {
-            // Delete file
-            unlink($file) or die('Error: unable to delete file!' . PHP_EOL);
-            echo 'Success: "' . $segment . '.php" has been deleted.' . PHP_EOL;
-        }
-        else {
-            exit('Error: unable to delete file!' . PHP_EOL);
-        }  
-    }    
+    }  
 }

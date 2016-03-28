@@ -11,14 +11,16 @@ $config['migration_type'] = 'timestamp';
 Terminal commands
 -----------------
 ```
-CI migration commands:
-php index.php tools migration "name"            Create new migration file.
-php index.php tools migrate "version"           Run all migrations. The version number is optional.
-php index.php tools reset                       Reset all migrations.
+!Don't forget to use "php index.php" before commands below.
 
-CI file commands:      
-php index.php tools controller "name"           Create new controller.
-php index.php tools model "name"                Create new model.
-php index.php tools library "name"              Create new library.
-php index.php tools "type" "file" "name" -rm    Delete file. Use "-rm" key to remove your created file.
+Migration commands:
+tools migration "name"            Create new migration file.
+tools migrate "version"           Run all migrations. The version number is optional.
+tools reset                       Reset all migrations.
+
+File commands:      
+tools controller "name"           Create new controller.
+tools model "name"                Create new model.
+tools library "name"              Create new library.
+tools helper "name"				  Create new helper.
 ```
