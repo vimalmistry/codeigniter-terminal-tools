@@ -20,5 +20,5 @@ CI file commands:
 php index.php tools controller "name"           Create new controller.
 php index.php tools model "name"                Create new model.
 php index.php tools library "name"              Create new library.
-php index.php tools "type" "file" "name" -rm    Delete file. Use "-rm" key to delete your created file.
+php index.php tools "type" "file" "name" -rm    Delete file. Use "-rm" key to remove your created file.
 ```
