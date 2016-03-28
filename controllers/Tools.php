@@ -136,7 +136,7 @@ class Tools extends CI_Controller
      */
     public function helper($name)
     {
-        $name = strtolower($name) .'_helper';
+        $name = strtolower($name) . '_helper';
         $this->_create_file($this->file['helper'], $name);         
     }
 
@@ -151,7 +151,7 @@ class Tools extends CI_Controller
         $segment = $type . '/' . $name;
         $path = APPPATH . $segment . '.php';
 
-        // Check file type & similar file
+        // Check similar file
         if (file_exists($path)) {
             exit('Error: "' . $segment . '.php" is already exist!' . PHP_EOL);
         }
