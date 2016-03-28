@@ -13,8 +13,9 @@ Terminal commands
 ```
 CI migration commands:
 php index.php tools migration "name"            Create new migration file.
-php index.php tools migrate "version"           Run all migrations. The version number is optional.\
+php index.php tools migrate "version"           Run all migrations. The version number is optional.
 php index.php tools reset                       Reset all migrations.
+
 CI file commands:      
 php index.php tools controller "name"           Create new controller.
 php index.php tools model "name"                Create new model.
