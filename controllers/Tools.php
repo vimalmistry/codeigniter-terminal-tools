@@ -2,6 +2,12 @@
 
 class Tools extends CI_Controller
 {
+    protected $ci_key = array(
+        'controller' => 'controllers',
+        'model' =>'models',
+        'library' =>'libraries'
+    );
+
     public function __construct()
     {
         parent::__construct();
@@ -12,8 +18,7 @@ class Tools extends CI_Controller
         }
 
         $this->load->dbforge(); 
-        $this->load->library('migration');
-        $this->load->helper('file');       
+        $this->load->library('migration');      
     }
 
     /**
@@ -86,80 +91,64 @@ class Tools extends CI_Controller
 
     /**
      * Create application files.
-     * Available file types: [controller, model, library]
-     * @params $key string
-     * @params $value string  
+     * @params $file_type string
+     * @params $title string  
      */
-    public function create($key, $value)
+    public function create($file_type, $title)
     {
-        $data = array();
+        $row = null;
 
-        switch ($key) {
-            case 'controller':
-                $data = array('file' => 'controllers', 'name' => $value);
-                break;
-            case 'model':
-                $data = array('file' => 'models', 'name' => $value);
-                break;
-            case 'library':
-                $data = array('file' => 'libraries', 'name' => $value);
-                break;
-            default:
-                unset($data);                
+        if ($this->ci_key[$file_type]) {
+            $row = $this->ci_key[$file_type] . '/' . $title;
+        }
+        else {
+            unset($row); 
         }
 
         // Check file type & similar file
-        if (!isset($data)) {
-            exit('Error: "'.$key.'" is not available type!');
+        if (!isset($row)) {
+            exit('Error: "' . $file_type . '" is not available file type!');
         }
-        elseif (file_exists(APPPATH . $data['file'] .'/'. $data['name'] .'.php')) {
-            exit('Error: "'.$data['file'] .'/'. $data['name'] .'.php" is already exist!' . PHP_EOL);
+        elseif (file_exists(APPPATH . $row .'.php')) {
+            exit('Error: "' . $row . '.php" is already exist!' . PHP_EOL);
         }
 
-        $path = APPPATH . $data['file'] .'/'. $data['name'] .'.php';
-        $template = $this->load->view('tools/'.$data['file'], $data, TRUE);
+        $path = APPPATH . $row . '.php';
+        $template = $this->load->view('tools/' . $this->ci_key[$file_type], $data['name'] = $title, TRUE);
 
         // Create file
         $file = fopen($path, "w") or die('Error: unable to create file!' . PHP_EOL);
         fwrite($file, $template);
         fclose($file);
 
-        echo 'Success: "'. $data['file'] .'/'. $data['name'] .'.php" has been created.' . PHP_EOL;
+        echo 'Success: "'.$row.'.php" has been created.' . PHP_EOL;
     }
 
     /**
      * Delete application files.
-     * Available file types: [controller, model, library]
-     * @params $key string
-     * @params $value string  
+     * @params $file_type string
+     * @params $title string  
      */
-    public function delete($key, $value)
+    public function delete($file_type, $title)
     {
-        $data = array();
-        
-        switch ($key) {
-            case 'controller':
-                $data = array('file' => 'controllers', 'name' => $value);
-                break;
-            case 'model':
-                $data = array('file' => 'models', 'name' => $value);
-                break;
-            case 'library':
-                $data = array('file' => 'libraries', 'name' => $value);
-                break;
-            default:
-                unset($data);                
+        $row = null;
+
+        if ($this->ci_key[$file_type]) {
+            $row = $this->ci_key[$file_type] . '/' . $title;
+        }
+        else {
+            unset($row); 
         }
 
         // Check file type & similar file
-        if (!isset($data)) {
-            exit('Error: "'.$key.'" is not available type!' . PHP_EOL);
+        if (!isset($row)) {
+            exit('Error: "' . $file_type . '" is not available file type!' . PHP_EOL);
         }
-        elseif (file_exists(APPPATH . $data['file'] .'/'. $data['name'] .'.php')) {
-            $file = APPPATH . $data['file'] .'/'. $data['name'] .'.php';
+        elseif (file_exists(APPPATH . $row . '.php')) {
+            $file = APPPATH . $row . '.php';
             // Delete file
             unlink($file) or die('Error: unable to delete file!' . PHP_EOL);
-            echo 'Success: "'. $data['file'] .'/'. $data['name'] .'.php" has been deleted.' . PHP_EOL;
+            echo 'Success: "' . $row . '.php" has been deleted.' . PHP_EOL;
         }
         else {
             exit('Error: unable to delete file!' . PHP_EOL);
