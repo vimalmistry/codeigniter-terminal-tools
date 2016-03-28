@@ -1,6 +1,5 @@
 # CI-Tools-Controller
 Maintenance controller for Codeigniter3
-## Migrations
 Migration configuration. Open /application/config/migration.php and set:
 ```
 $config['migration_enabled'] = TRUE;
