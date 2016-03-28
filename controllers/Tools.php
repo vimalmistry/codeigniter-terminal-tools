@@ -2,7 +2,7 @@
 
 class Tools extends CI_Controller
 {
-    protected $ci_key = array(
+    protected $file = array(
         'controller' => 'controllers',
         'model' =>'models',
         'library' =>'libraries'
@@ -31,7 +31,9 @@ class Tools extends CI_Controller
         $info .= "php index.php tools migrate \"version\"           Run all migrations. The version number is optional.\n";
         $info .= "php index.php tools reset                       Reset all migrations.\n\n";
         $info .= "CI file commands:\n";        
-        $info .= "php index.php tools create \"file\" \"name\"        Create new file.\n";
+        $info .= "php index.php tools controller \"name\"           Create new controller.\n";
+        $info .= "php index.php tools model \"name\"                Create new model.\n";
+        $info .= "php index.php tools library \"name\"              Create new library.\n";
         $info .= "php index.php tools delete \"file\" \"name\"        Delete file.";
 
         print $info . PHP_EOL;
@@ -90,65 +92,76 @@ class Tools extends CI_Controller
     }
 
     /**
-     * Create application files.
-     * @params $file_type string
-     * @params $title string  
+     * Available actions for application files:
+     * => controller. Create controller.
+     * => model. Create model.
+     * => library. Create library.
+     *
+     * @params $name string. I'ts a file name.
+     * @params $key string. Use "-rm" to remove your created file.
      */
-    public function create($file_type, $title)
+    public function controller($name, $key = null)
     {
-        $row = null;
+        ($key === '-rm') ?
+        $this->_delete($this->file['controller'], $name) :
+        $this->_create($this->file['controller'], $name);
+    }
 
-        if ($this->ci_key[$file_type]) {
-            $row = $this->ci_key[$file_type] . '/' . $title;
-        }
-        else {
-            unset($row); 
-        }
+    public function model($name, $key = null)
+    {
+        ($key === '-rm') ?
+        $this->_delete($this->file['model'], $name) :
+        $this->_create($this->file['model'], $name);        
+    }
+
+    public function library($name, $key = null)
+    {
+        ($key === '-rm') ?
+        $this->_delete($this->file['library'], $name) :
+        $this->_create($this->file['library'], $name);         
+    }
+
+    /**
+     * Create application files.
+     * @params $type string
+     * @params $name string 
+     */
+    protected function _create($type, $name)
+    {
+        $data['name'] = $name;
+        $segment = $type . '/' . $name;
+        $path = APPPATH . $segment . '.php';
 
         // Check file type & similar file
-        if (!isset($row)) {
-            exit('Error: "' . $file_type . '" is not available file type!');
-        }
-        elseif (file_exists(APPPATH . $row .'.php')) {
-            exit('Error: "' . $row . '.php" is already exist!' . PHP_EOL);
+        if (file_exists($path)) {
+            exit('Error: "' . $segment . '.php" is already exist!' . PHP_EOL);
         }
 
-        $path = APPPATH . $row . '.php';
-        $template = $this->load->view('tools/' . $this->ci_key[$file_type], $data['name'] = $title, TRUE);
-
+        $template = $this->load->view('tools/' . $type, $data, TRUE);
+        
         // Create file
         $file = fopen($path, "w") or die('Error: unable to create file!' . PHP_EOL);
         fwrite($file, $template);
         fclose($file);
 
-        echo 'Success: "'.$row.'.php" has been created.' . PHP_EOL;
+        echo 'Success: "' . $segment . '.php"  has been created.' . PHP_EOL;
     }
 
     /**
      * Delete application files.
-     * @params $file_type string
-     * @params $title string  
+     * @params $type string
+     * @params $name string  
      */
-    public function delete($file_type, $title)
+    protected function _delete($type, $name)
     {
-        $row = null;
+        $segment = $type . '/' . $name;
+        $file = APPPATH . $segment . '.php';
 
-        if ($this->ci_key[$file_type]) {
-            $row = $this->ci_key[$file_type] . '/' . $title;
-        }
-        else {
-            unset($row); 
-        }
-
-        // Check file type & similar file
-        if (!isset($row)) {
-            exit('Error: "' . $file_type . '" is not available file type!' . PHP_EOL);
-        }
-        elseif (file_exists(APPPATH . $row . '.php')) {
-            $file = APPPATH . $row . '.php';
+        // Check similar file
+        if (file_exists($file)) {
             // Delete file
             unlink($file) or die('Error: unable to delete file!' . PHP_EOL);
-            echo 'Success: "' . $row . '.php" has been deleted.' . PHP_EOL;
+            echo 'Success: "' . $segment . '.php" has been deleted.' . PHP_EOL;
         }
         else {
             exit('Error: unable to delete file!' . PHP_EOL);
