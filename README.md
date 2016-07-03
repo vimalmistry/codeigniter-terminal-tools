@@ -1,4 +1,4 @@
-# CI-Tools-Controller
+# Codeigniter terminal tools
 Maintenance controller for Codeigniter3
 
 #### Migration configs
