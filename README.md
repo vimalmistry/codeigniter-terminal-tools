@@ -20,7 +20,8 @@ tools controller "name"           Create new controller.
 tools model "name"                Create new model.
 tools library "name"              Create new library.
 
+--------------------------------------------------------------------------------------
 Example:
 php index.php tools help
-php index.php controller Test
+php index.php tools controller Test
 ```
