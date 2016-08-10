@@ -58,8 +58,7 @@ class Tools extends CI_Controller
             } else {
                 show_error($this->migration->error_string());                
             }
-        }
-        else {
+        } else {
             if ($this->migration->latest()) {
                 echo "Success: migrations has been launched.\n" . PHP_EOL;
             } else {
