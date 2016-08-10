@@ -8,19 +8,19 @@ $config['migration_enabled'] = TRUE;
 $config['migration_type'] = 'timestamp';
 ```
 #### Terminal commands
-Don't forget to use "php index.php" before commands below.
+!Don't forget to use "php index.php" before commands below.
 ```
 Migration commands:
 tools migration "name"            Create new migration file.
 tools migrate "version"           Run all migrations. The version number is optional.
-tools reset                       Reset all migrations.
+tools reset "version"             Reset all migrations. The version number is optional.
 
-File commands:      
+File commands:
 tools controller "name"           Create new controller.
 tools model "name"                Create new model.
 tools library "name"              Create new library.
-tools helper "name"               Create new helper.
 
 Example:
-php index.php tools controller Test
+php index.php tools help
+php index.php controller Test
 ```
