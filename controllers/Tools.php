@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * CodeIgniter3 Tools Controllers
+ * CodeIgniter3 Tools Controller
  * Allows to work with migrations & create general app files.
  */
 class Tools extends CI_Controller
