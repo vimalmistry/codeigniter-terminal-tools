@@ -1,5 +1,5 @@
-# Codeigniter terminal tools
-Maintenance controller for Codeigniter3
+# CodeIgniter Terminal Tools
+Maintenance controller for CodeIgniter3 console
 
 #### Migration configs
 Open /application/config/migration.php and set:
@@ -8,7 +8,6 @@ $config['migration_enabled'] = TRUE;
 $config['migration_type'] = 'timestamp';
 ```
 #### Terminal commands
-!Don't forget to use "php index.php" before commands below.
 ```
 Migration commands:
 tools migration "name"            Create new migration file.
@@ -23,5 +22,4 @@ tools library "name"              Create new library.
 --------------------------------------------------------------------------------------
 Example:
 php index.php tools help
-php index.php tools controller Test
 ```

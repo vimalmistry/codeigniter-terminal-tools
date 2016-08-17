@@ -11,8 +11,8 @@ class Tools extends CI_Controller
      */
     protected $file = array(
         'controller' => 'controllers',
-        'model' =>'models',
-        'library' =>'libraries'
+        'model' => 'models',
+        'library' => 'libraries'
     );
 
     /**
@@ -50,10 +50,10 @@ class Tools extends CI_Controller
      * The migration file number is optional. It's useful for rolling back migrations.
      * @params $number integer
      */
-    public function migrate($number = null)
+    public function migrate($version = null)
     {
-        if ($number) {
-            if ($this->migration->version($number)) {
+        if ($version) {
+            if ($this->migration->version($version)) {
                 echo "Success: migration has been launched.\n" . PHP_EOL;
             } else {
                 show_error($this->migration->error_string());                
@@ -86,9 +86,9 @@ class Tools extends CI_Controller
      * Resets all migrations from database
      * @params $number string
      */    
-    public function reset($number = null)
+    public function reset($version = null)
     {
-        $v = ($number) ? $number : 0;
+        $v = ($version) ? $version : 0;
         $this->migration->version($v);
         echo "Success: migrations has been reseted.\n" . PHP_EOL;            
     }
