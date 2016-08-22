@@ -135,7 +135,6 @@ class Tools extends CI_Controller
             exit("Error: '" . $segment . ".php' is already exist!\n" . PHP_EOL);
         }
         $template = $this->load->view('tools/' . $type, $data, TRUE);
-        
         // Create file
         $file = fopen($path, "w") or die("Error: unable to create file!\n" . PHP_EOL);
         fwrite($file, $template);
