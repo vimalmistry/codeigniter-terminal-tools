@@ -3,7 +3,7 @@ Maintenance controller for CodeIgniter3 console
 
 #### Migration configs
 Open /application/config/migration.php and set:
-```
+```php
 $config['migration_enabled'] = TRUE;
 $config['migration_type'] = 'timestamp';
 ```
